@@ -113,6 +113,23 @@ public:
         return x() * x() + y() * y() + z() * z();
     }
 
+    /**
+     * Computes the dot product of two vectors.
+     *
+     * @param[in] other other vector
+     * @returns the dot product of `*this` and `other`
+     */
+    template<class U>
+    [[nodiscard]] constexpr std::common_type_t<T, U>
+    dot(const Vec3<U>& other) const noexcept
+    {
+        using V = std::common_type_t<T, U>;
+        const auto xx = static_cast<V>(x()) * static_cast<V>(other.x());
+        const auto yy = static_cast<V>(y()) * static_cast<V>(other.y());
+        const auto zz = static_cast<V>(z()) * static_cast<V>(other.z());
+        return xx + yy + zz;
+    }
+
     [[nodiscard]] constexpr Vec3
     operator+() const noexcept
     {
@@ -283,23 +300,5 @@ private:
     T y_ = {};
     T z_ = {};
 };
-
-/**
- * Computes the dot product of two vectors.
- *
- * @param[in] a first vector
- * @param[in] b second vector
- * @returns the dot product of `a` and `b`
- */
-template<class T, class U>
-[[nodiscard]] constexpr std::common_type_t<T, U>
-dot(const Vec3<T>& a, const Vec3<U>& b) noexcept
-{
-    using V = std::common_type_t<T, U>;
-    const auto xx = static_cast<V>(a.x()) * static_cast<V>(b.x());
-    const auto yy = static_cast<V>(a.y()) * static_cast<V>(b.y());
-    const auto zz = static_cast<V>(a.z()) * static_cast<V>(b.z());
-    return xx + yy + zz;
-}
 
 } // namespace vec3
