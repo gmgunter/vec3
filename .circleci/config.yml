@@ -49,7 +49,9 @@ jobs:
           name: Run unit tests
           working_directory: libvec3
           command: |
-            ctest --preset=<<parameters.cmake-preset>>
+            ctest --preset=<<parameters.cmake-preset>> --output-junit test.xml
+      - store_test_results:
+          path: libvec3/build/<<parameters.cmake-preset>>/test.xml
 
 workflows:
   pr-pipeline:
