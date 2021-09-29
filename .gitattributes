@@ -1,0 +1,7 @@
+# Normalize EOL for all files that git considers text files.
+* text=auto eol=lf
+
+# Treat CMake `configure_file()` sources as though in their destination
+# language.
+*.cmake.in linguist-language=CMake
+*.hpp.in linguist-language=C++

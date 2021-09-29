@@ -1,0 +1,49 @@
+Language: Cpp
+BasedOnStyle: LLVM
+
+# Indentation
+IndentWidth: 4
+TabWidth: 4
+ContinuationIndentWidth: 8
+AccessModifierOffset: -4
+
+# Includes
+SortIncludes: true
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^"'
+    Priority: 1
+  - Regex: ".*"
+    Priority: 2
+
+# Line breaks
+AlwaysBreakTemplateDeclarations: Yes
+AlwaysBreakAfterReturnType: All
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+BinPackParameters: false
+
+# Braces
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: Never
+  AfterEnum: false
+  AfterFunction: true
+  AfterNamespace: false
+  AfterStruct: false
+  AfterUnion: false
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeLambdaBody: false
+  BeforeWhile: false
+  SplitEmptyFunction: false
+  SplitEmptyNamespace: true
+  SplitEmptyRecord: false
+
+# Spaces
+SpaceAfterTemplateKeyword: false
+PointerAlignment: Left
+
+# Misc
+AllowShortCaseLabelsOnASingleLine: true

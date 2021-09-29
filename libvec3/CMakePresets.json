@@ -1,0 +1,40 @@
+{
+    "version": 2,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 20,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "ninja-release",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "BUILD_SHARED_LIBS": "OFF",
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                "CMAKE_CXX_EXTENSIONS": "OFF",
+                "CMAKE_CXX_FLAGS": "-fdiagnostics-color=always -Wall -Walloc-zero -Wconversion -Wcast-align -Wcast-qual -Wdouble-promotion -Wduplicated-branches -Werror -Wextra -Wfloat-conversion -Wformat=2 -Wimplicit-fallthrough -Wlogical-op -Wmisleading-indentation -Wmissing-noreturn -Wnon-virtual-dtor -Wnull-dereference -Wold-style-cast -Wpedantic -Wshadow -Wsign-compare -Wsign-conversion -Wstrict-aliasing -Wstrict-overflow -Wtautological-compare -Wundef -Wuninitialized -Wunknown-pragmas -Wunused"
+            },
+            "warnings": {
+                "deprecated": true,
+                "uninitialized": true
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "ninja-release",
+            "configurePreset": "ninja-release"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "ninja-release",
+            "configurePreset": "ninja-release",
+            "output": {
+                "outputOnFailure": true
+            }
+        }
+    ]
+}

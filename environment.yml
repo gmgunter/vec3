@@ -1,0 +1,12 @@
+name: vec3
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - catch2>=2.13,<3
+  - cmake>=3.20
+  - gcc_linux-64
+  - gxx_linux-64
+  - libgcc-ng
+  - libstdcxx-ng
+  - ninja
