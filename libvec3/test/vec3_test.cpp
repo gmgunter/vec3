@@ -306,11 +306,11 @@ TEST_CASE("vec3.dot")
     const auto v1 = vec3::Vec3<float>{-1.0f, 0.0f, 1.0f};
     const auto v2 = vec3::Vec3<double>{1.0, 2.0, 3.0};
 
-    auto d12 = vec3::dot(v1, v2);
+    auto d12 = v1.dot(v2);
     CHECK((std::is_same<decltype(d12), double>{}));
     CHECK(d12 == Approx{2.0});
 
-    auto d21 = vec3::dot(v2, v1);
+    auto d21 = v2.dot(v1);
     CHECK((std::is_same<decltype(d21), double>{}));
     CHECK(d21 == Approx{2.0});
 }
