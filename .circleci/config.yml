@@ -1,0 +1,58 @@
+version: 2.1
+
+commands:
+  install-miniconda:
+    description: Install & initialize Miniconda3 on the executor
+    parameters:
+      prefix:
+        description: Miniconda3 installation root path
+        type: string
+        default: $HOME/miniconda3
+    steps:
+      - run:
+          name: Fetch & run Miniconda3 installer
+          command: |
+            curl -sSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o miniconda.sh
+            sh miniconda.sh -b -p <<parameters.prefix>>
+            rm miniconda.sh
+      - run:
+          name: Initialize conda
+          command: |
+            echo "export PATH=$PATH:<<parameters.prefix>>/bin" >> $BASH_ENV
+
+jobs:
+  build-and-test:
+    parameters:
+      cmake-preset:
+        description: CMake configuration preset name
+        type: string
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - install-miniconda
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            conda env update --name base --file environment.yml
+      - run:
+          name: Configure
+          working_directory: libvec3
+          command: |
+            cmake --preset=<<parameters.cmake-preset>>
+      - run:
+          name: Build
+          working_directory: libvec3
+          command: |
+            cmake --build --preset=<<parameters.cmake-preset>>
+      - run:
+          name: Run unit tests
+          working_directory: libvec3
+          command: |
+            ctest --preset=<<parameters.cmake-preset>>
+
+workflows:
+  pr-pipeline:
+    jobs:
+      - build-and-test:
+          cmake-preset: ninja-release
