@@ -125,9 +125,8 @@ public:
         return Vec3{-x(), -y(), -z()};
     }
 
-    constexpr Vec3&
-    operator+=(const Vec3& other) noexcept
-    {
+    constexpr Vec3& operator+=(const Vec3& other) noexcept {
+
         x_ += other.x();
         y_ += other.y();
         z_ += other.z();
