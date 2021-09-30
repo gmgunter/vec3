@@ -20,7 +20,29 @@ commands:
           command: |
             echo "export PATH=$PATH:<<parameters.prefix>>/bin" >> $BASH_ENV
 
+  clang-format-style-check:
+    description: Compare changes against the clang-format style sheet
+    steps:
+      - run:
+          name: Install clang-tools
+          command: |
+            conda install --channel conda-forge clang-tools
+      - run:
+          name: Check C++ style
+          command: |
+            result=$(git clang-format --diff main)
+            pattern="^(clang-format did not modify any files|no modified files to format)$"
+            if ! [[ $result =~ $pattern ]]; then echo $result && false; fi
+
 jobs:
+  style-checks:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - install-miniconda
+      - checkout
+      - clang-format-style-check
+
   build-and-test:
     parameters:
       cmake-preset:
@@ -56,5 +78,6 @@ jobs:
 workflows:
   pr-pipeline:
     jobs:
+      - style-checks
       - build-and-test:
           cmake-preset: ninja-release
