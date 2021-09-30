@@ -87,3 +87,15 @@ workflows:
       - style-checks
       - build-and-test:
           cmake-preset: ninja-release
+
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - build-and-test:
+          cmake-preset: ninja-release
