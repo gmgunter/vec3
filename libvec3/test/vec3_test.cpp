@@ -315,4 +315,11 @@ TEST_CASE("vec3.dot")
     CHECK(d21 == Approx{2.0});
 }
 
+TEST_CASE("asdf")
+{
+    const auto a = 1;
+    const auto b = 2;
+    CHECK(a == b);
+}
+
 } // namespace
