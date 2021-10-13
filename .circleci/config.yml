@@ -18,7 +18,7 @@ commands:
       - run:
           name: Initialize conda
           command: |
-            echo "export PATH=$PATH:<<parameters.prefix>>/bin" >> $BASH_ENV
+            echo "export PATH=<<parameters.prefix>>/bin:$PATH" >> $BASH_ENV
 
   clang-format-style-check:
     description: Compare changes against the clang-format style sheet
