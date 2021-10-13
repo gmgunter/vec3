@@ -19,6 +19,11 @@ repos:
     hooks:
       - id: mypy
 
+  - repo: https://github.com/cheshirekow/cmake-format-precommit
+    rev: v0.6.13
+    hooks:
+      - id: cmake-format
+
   - repo: https://github.com/psf/black
     rev: 21.9b0
     hooks:
