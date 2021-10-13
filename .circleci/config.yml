@@ -20,34 +20,7 @@ commands:
           command: |
             echo "export PATH=<<parameters.prefix>>/bin:$PATH" >> $BASH_ENV
 
-  clang-format-style-check:
-    description: Compare changes against the clang-format style sheet
-    steps:
-      - run:
-          name: Install clang-tools
-          command: |
-            conda install --channel conda-forge clang-tools
-      - run:
-          name: Check C++ style
-          command: |
-            CLANG_FORMAT_DIFF=$(git clang-format origin/main --diff --quiet)
-            if [ -z "$CLANG_FORMAT_DIFF" ]; then
-              echo "clang-format check passed"
-            else
-              echo "clang-format check failed"
-              printf "\n$CLANG_FORMAT_DIFF\n"
-              exit 1
-            fi
-
 jobs:
-  style-checks:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - install-miniconda
-      - checkout
-      - clang-format-style-check
-
   pre-commit-checks:
     docker:
       - image: cimg/base:stable
