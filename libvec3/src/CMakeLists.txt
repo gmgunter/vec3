@@ -34,20 +34,22 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
+set(install_config_dir ${CMAKE_INSTALL_DATAROOTDIR}/cmake/vec3)
+set(build_config_file ${CMAKE_CURRENT_BINARY_DIR}/cmake/vec3/vec3Config.cmake)
+set(build_config_version_file
+    ${CMAKE_CURRENT_BINARY_DIR}/cmake/vec3/vec3ConfigVersion.cmake)
+
 # Export CMake target definitions.
 install(
     EXPORT vec3Targets
     NAMESPACE vec3::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vec3)
+    DESTINATION ${install_config_dir})
 
 # Generate CMake package config files.
 include(CMakePackageConfigHelpers)
-set(build_config_file ${CMAKE_CURRENT_BINARY_DIR}/cmake/vec3/vec3Config.cmake)
-set(build_config_version_file
-    ${CMAKE_CURRENT_BINARY_DIR}/cmake/vec3/vec3ConfigVersion.cmake)
 configure_package_config_file(
     ${PROJECT_SOURCE_DIR}/cmake/vec3Config.cmake.in ${build_config_file}
-    INSTALL_DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake/vec3)
+    INSTALL_DESTINATION ${install_config_dir})
 
 # ---TODO---
 # Prior to v1.0.0, each minor release is expected to be breaking. Change
@@ -59,4 +61,4 @@ write_basic_package_version_file(
 
 # Install CMake package config files.
 install(FILES ${build_config_file} ${build_config_version_file}
-        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR})
+        DESTINATION ${install_config_dir})
