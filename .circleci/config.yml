@@ -30,13 +30,12 @@ commands:
       - run:
           name: Check C++ style
           command: |
-            result=$(git clang-format main --diff --quiet)
-            if [ -n "$result" ]; then
+            CLANG_FORMAT_DIFF=$(git clang-format origin/main --diff --quiet)
+            if [ -z "$CLANG_FORMAT_DIFF" ]; then
               echo "clang-format check passed"
             else
               echo "clang-format check failed"
-              echo
-              echo -e $result
+              printf "\n$CLANG_FORMAT_DIFF\n"
               exit 1
             fi
 
@@ -48,6 +47,21 @@ jobs:
       - install-miniconda
       - checkout
       - clang-format-style-check
+
+  pre-commit-checks:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - install-miniconda
+      - checkout
+      - run:
+          name: Install pre-commit
+          command: |
+            conda install --channel conda-forge pre-commit
+      - run:
+          name: Run pre-commit checks
+          command: |
+            pre-commit run --all-files
 
   build-and-test:
     parameters:
@@ -84,7 +98,7 @@ jobs:
 workflows:
   pr-pipeline:
     jobs:
-      - style-checks
+      - pre-commit-checks
       - build-and-test:
           cmake-preset: ninja-release
 
